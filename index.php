@@ -2,7 +2,36 @@
 session_start();
 include 'db_conn.php';
 $stmt = $pdo->query("SELECT * FROM game");
+$stmt1 = $pdo->query("WITH ItemSales AS (
+    SELECT
+        i.item_id,
+        i.game_id,
+        g.game_name,
+        i.nominal_topup,
+        g.logo,
+        COUNT(i.item_id) AS jumlah_penjualan,
+        RANK() OVER (ORDER BY COUNT(i.item_id) DESC) AS sales_rank
+    FROM
+        item i
+        JOIN invoice inv ON i.item_id = inv.item_id
+        JOIN game g ON g.game_id = i.game_id
+    GROUP BY
+        i.item_id, i.game_id, g.game_name, i.nominal_topup, g.logo
+)
+SELECT
+    game_name,
+    item_id,
+    game_id,
+    nominal_topup,
+    logo,
+    jumlah_penjualan
+FROM
+    ItemSales
+WHERE
+    sales_rank <= 3;");
+
 $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+$rows1 = $stmt1->fetchAll(PDO::FETCH_ASSOC);
 ?>
 
 <!DOCTYPE html>
@@ -16,7 +45,6 @@ $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <title>Topup Game - Proyek Tekweb</title>
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.0/js/bootstrap.bundle.min.js"></script>
-    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
@@ -109,6 +137,30 @@ $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
         </div>
     </section>
 
+    <!-- Paling Laris -->
+    <section class="bg-dark py-5">
+        <h1 class="text-center text-white">Paling Laris</h1>
+        <div class="container px-4 px-lg-5 mt-5">
+            <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+                <!-- Looping to load images and game names from the database -->
+                <?php
+                foreach ($rows1 as $row1) {
+                    $id = $row1["game_id"];
+                    echo "<div class='col mb-5' data-aos='fade-up'>";
+                    echo "<div class='card text-white bg-dark mb-3 h-80' style='background-color: rgb(10, 10, 12, 0.4) !important'>";
+                    echo "<img class='card-img-top' src='" . $row1['logo'] . "' alt='...' />";
+                    echo "<div class='card-body p-4'>";
+                    echo "<div class='text-center'><h5 class='fw-bolder'>" . $row1['game_name'] . "</h5></div>";
+                    echo "</div>";
+                    echo "<div class='card-footer p-4 pt-0 border-top-0 bg-transparent'>";
+                    echo "<div class='text-center'><a href='details.php?id=$id'><button class='btn btn-outline-light' type='submit'>Learn More</button></a></div>";
+                    echo "</div></div></div>";
+                }
+                ?>
+            </div>
+        </div>
+    </section>
+    
 </body>
 
 <!-- Footer-->
