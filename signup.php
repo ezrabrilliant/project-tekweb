@@ -84,6 +84,12 @@ function validate($data)
         footer {
             margin-top: auto;
         }
+        
+        input::-webkit-outer-spin-button,
+        input::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
     </style>
 </head>
     
@@ -122,32 +128,75 @@ function validate($data)
         </div>
     </nav>
       
-    <!-- Form Sign Up-->
-        class="d-flex flex-column justify-content-center align-items-center">
-        <div class="col-md-6 col-sm-12">
-            <div class="login-form">
-                <form name="login" action="signup.php" method="post" class="m-3">
-                    <div class="form-group">
-                        <h4>Email</h4><input type="text" class="form-control mt-1 mb-3" placeholder="Email" name="email_input">
+    <!-- signup -->
+    <section style="margin-top: 100px !important">
+        <div class="container py-5 h-100">
+            <div class="row d-flex justify-content-center align-items-center h-100">
+                <div class="col-12 col-md-8 col-lg-6 col-xl-5">
+                    <div class="card bg-dark text-white"
+                        style="border-radius: 1rem;background: rgba(0, 0, 0, 0.6) !important; backdrop-filter: blur(10px) saturate(125%); z-index: 2; -webkit-backdrop-filter: blur(10px) saturate(125%);">
+                        <div class="card-body p-5 text-center">
+
+                            <div class="mb-md-5 mt-md-4 pb-5">
+
+                                <h2 class="fw-bold m-5 text-uppercase">Sign Up</h2>
+                                <p class="text-white-50 mb-5">Sign up to get access to our services.</p>
+                                <form name="login" action="signup.php" method="post" class="m-3">
+                                    <div class="form-outline form-white mb-4">
+                                        <h4><label class="form-label" for="typeUsernameX">Username</label></h4>
+                                        <input type="text" id="typeUsernameX" class="form-control form-control-lg"
+                                            placeholder="Username" name="username_input" />
+                                    </div>
+
+                                    <div class="form-outline form-white mb-4">
+                                        <h4><label class="form-label" for="typeEmailX">Email</label></h4>
+                                        <input type="email" id="typeEmailX" class="form-control form-control-lg"
+                                            placeholder="Email" name="email_input" />
+                                    </div>
+
+                                    <div class="form-outline form-white mb-4">
+                                        <h3><label class="form-label" for="typeTeleponX">No. telepon</label></h4>
+                                            <input type="number" id="typeTeleponX" class="form-control form-control-lg"
+                                                placeholder="No. Telp" name="telepon_input" />
+                                    </div>
+
+                                    <div class="form-outline form-white mb-4">
+                                        <h4><label class="form-label" for="typePasswordX">Password</label></h4>
+                                        <input type="password" id="typePasswordX" class="form-control form-control-lg"
+                                            placeholder="Password" name="password_input" />
+                                    </div>
+
+                                    <button class="btn btn-outline-light btn-lg px-5" type="submit"
+                                        name="login-btn">Sign Up</button>
+
+                                    <?php if (!empty($errorMsg)): ?>
+                                        <p class="text-danger text-center mt-3">
+                                            <?php echo $errorMsg; ?>
+                                        </p>
+                                    <?php endif; ?>
+
+                                </form>
+
+                            </div>
+
+                            <div>
+                                <p class="mb-0">Already have an account? <a href="login.php"
+                                        class="text-white-50 fw-bold">Login</a></p>
+                            </div>
+
+                        </div>
                     </div>
-                    <div class="form-group  mb-3">
-                        <h4>Password</h4><input type="password" class="form-control mt-1" placeholder="Password" name="password_input">
-                    </div>
-                    <div class="form-group  mb-3">
-                        <h4>No telepon</h4><input type="text" class="form-control mt-1" placeholder="No telepon" name="telepon_input">
-                    </div>
-                    <div class="form-group  mb-3">
-                        <h4>Username</h4><input type="text" class="form-control mt-1" placeholder="Username" name="username_input">
-                    </div>
-                    <div class="text-center">
-                        <input type="submit" class="btn text-white bg-dark  w-25 login" value="Login" name="login-btn">
-                    </div>
-                    <?php if (!empty($errorMsg)): ?>
-                        <p class="text-danger text-center mt-3"><?php echo $errorMsg; ?></p>
-                    <?php endif; ?>
-                </form>
+                </div>
             </div>
         </div>
-    </div>
+    </section>
+
 </body>
+    
+<!-- Footer-->
+<footer class="py-5 bg-dark" style="background-color: rgb(10, 10, 12) !important">
+    <div class="container">
+        <p class="m-0 text-center text-white">Copyright &copy; PAY2WIN 2023</p>
+    </div>
+</footer>
 </html>
