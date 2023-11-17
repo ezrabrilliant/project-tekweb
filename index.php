@@ -48,6 +48,44 @@ $rows1 = $stmt1->fetchAll(PDO::FETCH_ASSOC);
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
+    
+    <style>
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .card {
+            opacity: 0;
+        }
+
+        .animate {
+            animation: fadeIn 0.8s ease-out;
+            animation-fill-mode: forwards;
+        }
+
+        body {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            margin: 0;
+        }
+
+        main {
+            flex-grow: 1;
+        }
+
+        footer {
+            margin-top: auto;
+        }
+    </style>
 </head>
 
 <body class="bg-dark">
@@ -160,7 +198,49 @@ $rows1 = $stmt1->fetchAll(PDO::FETCH_ASSOC);
             </div>
         </div>
     </section>
-    
+
+        
+    <!--Script Animation Card-->
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            var options = {
+                root: null,
+                rootMargin: "0px",
+                threshold: 0.5
+            };
+
+            var observer = new IntersectionObserver(function (entries, observer) {
+                entries.forEach(function (entry) {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add("animate");
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, options);
+
+            var elements = document.querySelectorAll(".card");
+
+            elements.forEach(function (element) {
+                observer.observe(element);
+            });
+        });
+    </script>
+
+    <!-- Script auto next script -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var carousel = document.getElementById('carouselExampleIndicators');
+            var carouselInstance = new bootstrap.Carousel(carousel, {
+                interval: false 
+            });
+
+            function nextSlide() {
+                carouselInstance.next();
+            }
+
+            setInterval(nextSlide, 2500);
+        });
+    </script>
 </body>
 
 <!-- Footer-->
