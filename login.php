@@ -2,6 +2,17 @@
 session_start();
 include "db_conn.php";
 
+if (isset($_SESSION['user'])) {
+    $_admin_status = $_SESSION['user']['admin_access'];
+
+    if ($_admin_status == 1) {
+        header('location: admin.php');
+    } else {
+        header('location: home.php');
+    }
+    exit();
+}
+
 // Initialize variables
 $_username;
 $_password;
@@ -33,19 +44,21 @@ if (isset($_POST['username_input']) && isset($_POST['password_input'])) {
         // Store user information in a session variable
         $_SESSION['user'] = $user;
 
-        // Pengecekan admin atau bukan
+        // Redirect to the appropriate page based on admin status
         if ($_admin_status == 1) {
-            header('location: http://localhost/admin.php');
+            header('location: admin.php');
         } else {
-            header('location: http://localhost/home.php');
+            header('location: home.php');
         }
+        exit();
     } else {
         $errorMsg = "Email atau password salah. Please try again.";
-        header('location: http://localhost/login.php?error=' . urlencode($errorMsg));
+        header('location: login.php?error=' . urlencode($errorMsg));
         exit();
     }
 }
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -58,7 +71,8 @@ if (isset($_POST['username_input']) && isset($_POST['password_input'])) {
     <title>Login</title>
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
 
     <style>
         body {
@@ -110,53 +124,54 @@ if (isset($_POST['username_input']) && isset($_POST['password_input'])) {
 
     <!-- login -->
     <section style="margin-top: 100px !important">
-    <div class="container py-5 h-100">
-        <div class="row d-flex justify-content-center align-items-center h-100">
-            <div class="col-12 col-md-8 col-lg-6 col-xl-5">
-                <div class="card bg-dark text-white" style="border-radius: 1rem;background: rgba(0, 0, 0, 0.6) !important; backdrop-filter: blur(10px) saturate(125%); z-index: 2; -webkit-backdrop-filter: blur(10px) saturate(125%);">
-                    <div class="card-body p-5 text-center">
+        <div class="container py-5 h-100">
+            <div class="row d-flex justify-content-center align-items-center h-100">
+                <div class="col-12 col-md-8 col-lg-6 col-xl-5">
+                    <div class="card bg-dark text-white"
+                        style="border-radius: 1rem;background: rgba(0, 0, 0, 0.6) !important; backdrop-filter: blur(10px) saturate(125%); z-index: 2; -webkit-backdrop-filter: blur(10px) saturate(125%);">
+                        <div class="card-body p-5 text-center">
 
-                        <div class="mb-md-5 mt-md-4 pb-5">
+                            <div class="mb-md-5 mt-md-4 pb-5">
 
-                            <h2 class="fw-bold m-5 text-uppercase">Login</h2>
-                            <p class="text-white-50 mb-5">Log in to access your account.</p>
-                            <form name="login" action="login.php" method="post" class="m-3">
-                                <div class="form-outline form-white mb-4">
-                                    <h4><label class="form-label" for="typeUsernameX">Username</label></h4>
-                                    <input type="text" id="typeUsernameX" class="form-control form-control-lg"
-                                        placeholder="Username" name="username_input" />
-                                </div>
+                                <h2 class="fw-bold m-5 text-uppercase">Login</h2>
+                                <p class="text-white-50 mb-5">Log in to access your account.</p>
+                                <form name="login" action="login.php" method="post" class="m-3">
+                                    <div class="form-outline form-white mb-4">
+                                        <h4><label class="form-label" for="typeUsernameX">Username</label></h4>
+                                        <input type="text" id="typeUsernameX" class="form-control form-control-lg"
+                                            placeholder="Username" name="username_input" />
+                                    </div>
 
-                                <div class="form-outline form-white mb-4">
-                                    <h4><label class="form-label" for="typePasswordX">Password</label></h4>
-                                    <input type="password" id="typePasswordX" class="form-control form-control-lg"
-                                        placeholder="Password" name="password_input" />
-                                </div>
+                                    <div class="form-outline form-white mb-4">
+                                        <h4><label class="form-label" for="typePasswordX">Password</label></h4>
+                                        <input type="password" id="typePasswordX" class="form-control form-control-lg"
+                                            placeholder="Password" name="password_input" />
+                                    </div>
 
-                                <button class="btn btn-outline-light btn-lg px-5" type="submit"
-                                    name="login-btn">Login</button>
+                                    <button class="btn btn-outline-light btn-lg px-5" type="submit"
+                                        name="login-btn">Login</button>
 
-                                <?php if (isset($_GET['error']) && !empty($_GET['error'])): ?>
-                                    <p class="text-danger text-center mt-3">
-                                        <?php echo urldecode($_GET['error']); ?>
-                                    </p>
-                                <?php endif; ?>
+                                    <?php if (isset($_GET['error']) && !empty($_GET['error'])): ?>
+                                        <p class="text-danger text-center mt-3">
+                                            <?php echo urldecode($_GET['error']); ?>
+                                        </p>
+                                    <?php endif; ?>
 
-                            </form>
+                                </form>
+
+                            </div>
+
+                            <div>
+                                <p class="mb-0">Don't have an account? <a href="signup.php"
+                                        class="text-white-50 fw-bold">Sign Up</a></p>
+                            </div>
 
                         </div>
-
-                        <div>
-                            <p class="mb-0">Don't have an account? <a href="signup.php"
-                                    class="text-white-50 fw-bold">Sign Up</a></p>
-                        </div>
-
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-</section>
+    </section>
 
 
 </body>
