@@ -2,6 +2,11 @@
 session_start();
 include "db_conn.php";
 
+// Check if the user is already logged in
+if (isset($_SESSION['user'])) {
+    header('location: home.php');
+    exit();
+}
 // Initialize variables
 $errorMsg = "";
 
@@ -36,8 +41,8 @@ if (isset($_POST['email_input']) && isset($_POST['password_input']) && isset($_P
         $stmt->bindParam(':username', $_username);
 
         if ($stmt->execute() && $stmt->rowCount() == 1) {
-            // redirect into home.php
-            header('location: http://localhost/home.php');
+            // User successfully registered, redirect to appropriate page
+            header('location: home.php');
         } else {
             // Error occurred while registering the user
             $errorMsg = "Registrasi gagal. Silakan coba lagi.";
@@ -84,7 +89,7 @@ function validate($data)
         footer {
             margin-top: auto;
         }
-        
+
         input::-webkit-outer-spin-button,
         input::-webkit-inner-spin-button {
             -webkit-appearance: none;
@@ -92,42 +97,42 @@ function validate($data)
         }
     </style>
 </head>
-    
+
 <body class="bg-dark">
 
-    <!-- Navigation -->
-    <nav class="py-4 navbar navbar-expand-lg navbar-dark bg-dark fixed-top"
-        style="background: rgba(0, 0, 0, 0.6) !important; backdrop-filter: blur(10px) saturate(125%); z-index: 2; -webkit-backdrop-filter: blur(10px) saturate(125%);">
-        <div class="container px-4 px-lg-5 text-white">
-            <a class="navbar-brand" href="index.php">
-                <h3>PAY2WIN</h3>
-            </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
-                aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
-                    <li class="nav-item me-4"><a class="nav-link" aria-current="page" href="index.php">HOME</a>
-                    </li>
-                    <li class="nav-item me-4"><a class="nav-link" href="about.php">ABOUT</a></li>
-                </ul>
-                <ul class="navbar-nav align-items-center">
-                    <li class="nav-item me-3">
-                        <a href="login.php" class="nav-link">
-                            <button class="btn btn-outline-light" type="submit">
-                                Login
-                            </button>
-                        </a>
-                    </li>
-                    <li class="nav-item"><a href="signup.php" class="nav-link"><button
-                                class="btn active btn-outline-light" type="submit">Sign up</button></a></li>
-                </ul>
+        <!-- Navigation -->
+        <nav class="py-4 navbar navbar-expand-lg navbar-dark bg-dark fixed-top"
+            style="background: rgba(0, 0, 0, 0.6) !important; backdrop-filter: blur(10px) saturate(125%); z-index: 2; -webkit-backdrop-filter: blur(10px) saturate(125%);">
+            <div class="container px-4 px-lg-5 text-white">
+                <a class="navbar-brand" href="index.php">
+                    <h3>PAY2WIN</h3>
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                    aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
+                        <li class="nav-item me-4"><a class="nav-link" aria-current="page" href="index.php">HOME</a>
+                        </li>
+                        <li class="nav-item me-4"><a class="nav-link" href="about.php">ABOUT</a></li>
+                    </ul>
+                    <ul class="navbar-nav align-items-center">
+                        <li class="nav-item me-3">
+                            <a href="login.php" class="nav-link">
+                                <button class="btn btn-outline-light" type="submit">
+                                    Login
+                                </button>
+                            </a>
+                        </li>
+                        <li class="nav-item"><a href="signup.php" class="nav-link"><button
+                                    class="btn active btn-outline-light" type="submit">Sign up</button></a></li>
+                    </ul>
+                </div>
             </div>
-        </div>
-    </nav>
-      
+        </nav>
+
     <!-- signup -->
     <section style="margin-top: 100px !important">
         <div class="container py-5 h-100">
@@ -192,7 +197,7 @@ function validate($data)
     </section>
 
 </body>
-    
+
 <!-- Footer-->
 <footer class="py-5 bg-dark" style="background-color: rgb(10, 10, 12) !important">
     <div class="container">
