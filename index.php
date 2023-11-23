@@ -1,34 +1,42 @@
 <?php
 session_start();
 include 'db_conn.php';
+
+if (isset($_SESSION['user'])) {
+    $_admin_status = $_SESSION['user']['admin_access'];
+
+    if ($_admin_status == 1) {
+        header('location: admin.php');
+    } else {
+        header('location: home.php');
+    }
+    exit();
+}
+
 $stmt = $pdo->query("SELECT * FROM game");
 $stmt1 = $pdo->query("WITH ItemSales AS (
     SELECT
-        i.item_id,
         i.game_id,
         g.game_name,
-        i.nominal_topup,
         g.logo,
-        COUNT(i.item_id) AS jumlah_penjualan,
+        SUM(COUNT(i.item_id)) OVER (PARTITION BY i.game_id) AS jumlah_penjualan,
         RANK() OVER (ORDER BY COUNT(i.item_id) DESC) AS sales_rank
     FROM
         item i
         JOIN invoice inv ON i.item_id = inv.item_id
         JOIN game g ON g.game_id = i.game_id
     GROUP BY
-        i.item_id, i.game_id, g.game_name, i.nominal_topup, g.logo
+        i.game_id, g.game_name, g.logo
 )
 SELECT
     game_name,
-    item_id,
     game_id,
-    nominal_topup,
     logo,
     jumlah_penjualan
 FROM
     ItemSales
 WHERE
-    sales_rank <= 3;");
+    sales_rank <= 4;");
 
 $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
 $rows1 = $stmt1->fetchAll(PDO::FETCH_ASSOC);
@@ -44,12 +52,11 @@ $rows1 = $stmt1->fetchAll(PDO::FETCH_ASSOC);
     <meta name="author" content="" />
     <title>Topup Game - Proyek Tekweb</title>
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.0/js/bootstrap.bundle.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
 
-    
+
     <style>
         @keyframes fadeIn {
             from {
@@ -86,13 +93,29 @@ $rows1 = $stmt1->fetchAll(PDO::FETCH_ASSOC);
         footer {
             margin-top: auto;
         }
+
+        #carouselExampleIndicators {
+            border-radius: 1rem;
+            overflow: hidden;
+            /* Ensures rounded corners are visible */
+        }
+
+        .carousel-inner {
+            border-radius: 1rem;
+            /* Applies border radius to the images inside the carousel */
+        }
+
+        .carousel-item img {
+            border-radius: 1rem;
+            /* Applies border radius to individual carousel images */
+        }
     </style>
 </head>
 
-<body class="bg-dark">
+<body class="body bg-dark">
 
     <!-- Navigation -->
-    <nav class="py-4 navbar navbar-expand-lg navbar-dark bg-dark fixed-top"
+    <nav class="py-4 navbar navbar-expand-lg navbar-dark fixed-top"
         style="background: rgba(0, 0, 0, 0.6) !important; backdrop-filter: blur(10px) saturate(125%); z-index: 2; -webkit-backdrop-filter: blur(10px) saturate(125%);">
         <div class="container px-4 px-lg-5 text-white">
             <a class="navbar-brand" href="index.php">
@@ -121,7 +144,7 @@ $rows1 = $stmt1->fetchAll(PDO::FETCH_ASSOC);
 
 
     <!-- Header-->
-    <header class="bg-dark py-5">
+    <header class="py-5">
         <div class="container px-4 px-lg-5" style="margin-top: 150px !important; margin-bottom: 40px !important;">
             <div id="carouselExampleIndicators" class="carousel slide">
                 <div class="carousel-indicators">
@@ -151,56 +174,77 @@ $rows1 = $stmt1->fetchAll(PDO::FETCH_ASSOC);
             </div>
         </div>
     </header>
-    
+
     <!-- Game Terbaru-->
-    <section class="bg-dark py-5">
+    <section class="py-5">
         <h1 class="text-center text-white">Produk Terbaru</h1>
         <div class="container px-4 px-lg-5 mt-5">
             <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
                 <!-- LOOPING UNTUK LOAD IMAGE DARI DATABASE game -->
-                <?php
-                foreach ($rows as $row) {
+                <?php foreach ($rows as $row): ?>
+                    <?php
                     $id = $row["game_id"];
-                    echo "<div class='col mb-5' data-aos='fade-up'>";
-                    echo "<div class='card text-white bg-dark mb-3 h-80' style='background-color: rgb(10, 10, 12, 0.4) !important'>";
-                    echo "<img class='card-img-top' src='" . $row['logo'] . "' alt='...' />";
-                    echo "<div class='card-body p-4'>";
-                    echo "<div class='text-center'><h5 class='fw-bolder'>" . $row['game_name'] . "</h5></div>";
-                    echo "</div>";
-                    echo "<div class='card-footer p-4 pt-0 border-top-0 bg-transparent'>";
-                    echo "<div class='text-center'><a href='details.php?id=$id'><button class='btn btn-outline-light' type='submit'>Learn More</button></a></div>";
-                    echo "</div></div></div>";
-                }
-                ?>
+                    ?>
+                    <div class='col mb-5' data-aos='fade-up'>
+                        <div class='card text-white bg-dark mb-3 h-80'
+                            style='border-radius: 1rem;background-color: rgb(10, 10, 12, 0.4) !important'>
+                            <img class='card-img-top' src='<?= $row['logo'] ?>' alt='...' />
+                            <div class='card-body p-4'>
+                                <div class='text-center'>
+                                    <h5 class='card-title'>
+                                        <a>
+                                            <?= $row['game_name'] ?>
+                                        </a>
+                                    </h5>
+                                </div>
+                            </div>
+                            <div class='card-footer p-4 pt-0 border-top-0 bg-transparent'>
+                                <div class='text-center'><a href='details.php?id=<?= $id ?>'><button
+                                            class='btn btn-outline-light stretched-link' type='submit'>Learn
+                                            More</button></a></div>
+                            </div>
+                        </div>
+                    </div>
+                <?php endforeach; ?>
             </div>
         </div>
     </section>
 
+
     <!-- Paling Laris -->
-    <section class="bg-dark py-5">
+    <section class="py-5">
         <h1 class="text-center text-white">Paling Laris</h1>
         <div class="container px-4 px-lg-5 mt-5">
             <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
                 <!-- Looping to load images and game names from the database -->
-                <?php
-                foreach ($rows1 as $row1) {
+                <?php foreach ($rows1 as $row1): ?>
+                    <?php
                     $id = $row1["game_id"];
-                    echo "<div class='col mb-5' data-aos='fade-up'>";
-                    echo "<div class='card text-white bg-dark mb-3 h-80' style='background-color: rgb(10, 10, 12, 0.4) !important'>";
-                    echo "<img class='card-img-top' src='" . $row1['logo'] . "' alt='...' />";
-                    echo "<div class='card-body p-4'>";
-                    echo "<div class='text-center'><h5 class='fw-bolder'>" . $row1['game_name'] . "</h5></div>";
-                    echo "</div>";
-                    echo "<div class='card-footer p-4 pt-0 border-top-0 bg-transparent'>";
-                    echo "<div class='text-center'><a href='details.php?id=$id'><button class='btn btn-outline-light' type='submit'>Learn More</button></a></div>";
-                    echo "</div></div></div>";
-                }
-                ?>
+                    ?>
+                    <div class='col mb-5' data-aos='fade-up'>
+                        <div class='card text-white bg-dark mb-3 h-80'
+                            style='border-radius: 1rem;background-color: rgb(10, 10, 12, 0.4) !important'>
+                            <img class='card-img-top' src='<?= $row1['logo'] ?>' alt='...' />
+                            <div class='card-body p-4'>
+                                <div class='text-center'>
+                                    <h5 class='fw-bolder'>
+                                        <?= $row1['game_name'] ?>
+                                    </h5>
+                                </div>
+                            </div>
+                            <div class='card-footer p-4 pt-0 border-top-0 bg-transparent'>
+                                <div class='text-center'><a href='details.php?id=<?= $id ?>'><button
+                                            class='btn btn-outline-light stretched-link' type='submit'>Learn
+                                            More</button></a></div>
+                            </div>
+                        </div>
+                    </div>
+                <?php endforeach; ?>
             </div>
         </div>
     </section>
 
-        
+
     <!--Script Animation Card-->
     <script>
         document.addEventListener("DOMContentLoaded", function () {
@@ -227,12 +271,15 @@ $rows1 = $stmt1->fetchAll(PDO::FETCH_ASSOC);
         });
     </script>
 
+    <!-- Bootstrap core JS-->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+    
     <!-- Script auto next script -->
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             var carousel = document.getElementById('carouselExampleIndicators');
             var carouselInstance = new bootstrap.Carousel(carousel, {
-                interval: false 
+                interval: false
             });
 
             function nextSlide() {
