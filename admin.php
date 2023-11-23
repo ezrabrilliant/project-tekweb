@@ -304,6 +304,31 @@ if (isset($_SESSION['user'])) {
         }
     </script>
 
+    <script>
+        // Animate Card
+        document.addEventListener("DOMContentLoaded", function () {
+            var options = {
+                root: null,
+                rootMargin: "0px",
+                threshold: 0.5
+            };
+
+            var observer = new IntersectionObserver(function (entries, observer) {
+                entries.forEach(function (entry) {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add("animate");
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, options);
+
+            var elements = document.querySelectorAll(".card");
+
+            elements.forEach(function (element) {
+                observer.observe(element);
+            });
+        });
+    </script>
 
 </body>
 
