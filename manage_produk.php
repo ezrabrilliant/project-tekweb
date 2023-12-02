@@ -83,8 +83,9 @@ if (isset($_POST['nama_game_input']) && isset($_POST['deskripsi_input']) && isse
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Riwayat Pembelian User</title>
+    <title>Manage Produk - PAY2WIN</title>
 
+    <link rel="stylesheet" href="css/styles.css">
     <script src="https://kit.fontawesome.com/785e8a7b97.js" crossorigin="anonymous"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <link rel="stylesheet"
@@ -114,7 +115,16 @@ if (isset($_POST['nama_game_input']) && isset($_POST['deskripsi_input']) && isse
 </head>
 
 <body class="bg-dark">
-    
+
+    <div class="blob-c">
+        <div class="shape-blob one"></div>
+        <div class="shape-blob two"></div>
+        <div class="shape-blob three"></div>
+        <div class="shape-blob four"></div>
+        <div class="shape-blob five"></div>
+        <div class="shape-blob six"></div>
+    </div>
+
     <!-- Navigation-->
     <nav class="py-4 navbar navbar-expand-lg navbar-dark fixed-top"
         style="background: rgba(0, 0, 0, 0.6) !important; backdrop-filter: blur(10px) saturate(125%); z-index: 2; -webkit-backdrop-filter: blur(10px) saturate(125%);">
@@ -164,17 +174,19 @@ if (isset($_POST['nama_game_input']) && isset($_POST['deskripsi_input']) && isse
         <div id="content-wrapper" class="d-flex flex-column">
             <div id="content">
                 <div class="container" style="padding: 160px 0 20px 0;">
-                    <div class="card mb-4">
+                    <div class="card border-black text-white mb-4 animate"
+                        style='border-radius: 1rem;background-color: rgb(0, 0, 0, 0.4) !important'>
                         <div class="card-header"
-                            style="display: flex; justify-content: space-between;align-items: center;padding: 10px;background-color: #f5f5f5;">
-                            <h6 class="m-0 font-weight-bold text-dark"><strong>List Produk</strong></h6>
+                            style="display: flex; justify-content: space-between;align-items: center;padding: 10px;border-radius: 1rem;background-color: rgb(0, 0, 0, 0.0) !important">
+                            <h6 class="m-0 font-weight-bold text-light"><strong>List Produk</strong></h6>
                             <button class="btn btn-dark btn-sm" data-bs-toggle="modal" data-bs-target="#addGameModal"
                                 style="margin-left: 10px; text-bo"><i class="fa-solid fa-plus"
                                     style="padding:0 8px 0 0px"></i><strong>Tambah Produk</strong></button>
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
-                                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                <table class="table table-bordered table-dark" id="dataTable" width="100%"
+                                    cellspacing="0" style="--bs-table-bg: rgb(0, 0, 0, 0.2) !important;">
                                     <thead>
                                         <tr>
                                             <th style="width: 5%;">Produk ID</th>
@@ -225,7 +237,7 @@ if (isset($_POST['nama_game_input']) && isset($_POST['deskripsi_input']) && isse
     <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
         aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
+            <div class="modal-content bg-dark text-white">
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel">Are you sure you want to Logout?</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -243,7 +255,7 @@ if (isset($_POST['nama_game_input']) && isset($_POST['deskripsi_input']) && isse
     <div class="modal fade" id="editGameModal" tabindex="-1" role="dialog" aria-labelledby="editUserModalLabel"
         aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
+            <div class="modal-content bg-dark text-white">
                 <div class="modal-header">
                     <h5 class="modal-title" id="editUserModalLabel">Edit Produk Information</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -268,8 +280,12 @@ if (isset($_POST['nama_game_input']) && isset($_POST['deskripsi_input']) && isse
                             <input type="textarea" class="form-control" id="editGambarDeskripsi"
                                 name="editGambarDeskripsi" required>
                         </div>
-                        <input type="hidden" id="editGameId" name="editGameId">
-                        <button type="submit" class="btn btn-primary">Save Changes</button>
+
+                        <div class="text-center d-flex justify-content-between" style="padding:10px 0 0 0">
+                            <button type="button" class="btn text-white btn-danger" data-bs-dismiss="modal"aria-label="Close"><i class="fa-solid fa-ban" style="padding-right:10px;"></i> Cancel</button>
+                            <input type="hidden" id="editGameId" name="editGameId">
+                            <button type="submit" class="btn btn-success"><i class="fa-solid fa-floppy-disk" style="padding-right:10px;"></i> Save Changes</button>
+                        </div>
                     </form>
                 </div>
             </div>
@@ -280,7 +296,7 @@ if (isset($_POST['nama_game_input']) && isset($_POST['deskripsi_input']) && isse
     <div class="modal fade" id="addGameModal" tabindex="-1" role="dialog" aria-labelledby="addAdminModalLabel"
         aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
+            <div class="modal-content bg-dark text-white">
                 <div class="modal-header">
                     <h5 class="modal-title" id="addAdminModalLabel">Tambah Produk</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -289,8 +305,8 @@ if (isset($_POST['nama_game_input']) && isset($_POST['deskripsi_input']) && isse
                     <form name="add_game" action="manage_produk.php" method="post" class="m-3"
                         onsubmit="return validateForm()">
                         <div class="form-group">
-                            <h4>Nama Produk</h4><input type="text" class="form-control mt-1 mb-3" placeholder="Nama game"
-                                name="nama_game_input">
+                            <h4>Nama Produk</h4><input type="text" class="form-control mt-1 mb-3"
+                                placeholder="Nama game" name="nama_game_input">
                         </div>
                         <div class="form-group  mb-3">
                             <h4>Deskripsi</h4><input type="textarea" class="form-control mt-1" placeholder="Deskripsi"
@@ -306,9 +322,8 @@ if (isset($_POST['nama_game_input']) && isset($_POST['deskripsi_input']) && isse
                         </div>
                         <div class="text-center d-flex justify-content-between" style="padding:10px 0 0 0">
                             <button type="button" class="btn text-white btn-danger" data-bs-dismiss="modal"
-                                aria-label="Close">Cancel</button>
-                            <input type="submit" class="btn text-white btn-success w-25 login" value="Submit"
-                                name="login-btn">
+                                aria-label="Close"> Cancel</button>
+                                <input type="submit" class="btn text-white btn-success w-25 login" value="Submit" name="login-btn">
                         </div>
 
                         <?php if (!empty($errorMsg)): ?>
