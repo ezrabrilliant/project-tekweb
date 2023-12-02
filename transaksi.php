@@ -93,6 +93,7 @@ if (isset($_SESSION['user'])) {
 
     <title>Riwayat Pembelian User</title>
 
+    <link rel="stylesheet" href="css/styles.css">
     <script src="https://kit.fontawesome.com/785e8a7b97.js" crossorigin="anonymous"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <link rel="stylesheet"
@@ -105,21 +106,6 @@ if (isset($_SESSION['user'])) {
     <script defer src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
 
     <style>
-        body {
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            margin: 0;
-        }
-
-        main {
-            flex-grow: 1;
-        }
-
-        footer {
-            margin-top: auto;
-        }
-
         .checkbox-menu li label {
             display: block;
             padding: 3px 10px;
@@ -147,6 +133,15 @@ if (isset($_SESSION['user'])) {
 
 <body class="bg-dark">
 
+    <div class="blob-c">
+        <div class="shape-blob one"></div>
+        <div class="shape-blob two"></div>
+        <div class="shape-blob three"></div>
+        <div class="shape-blob four"></div>
+        <div class="shape-blob five"></div>
+        <div class="shape-blob six"></div>
+    </div>
+
     <!-- Navigation-->
     <nav class="py-4 navbar navbar-expand-lg navbar-dark fixed-top"
         style="background: rgba(0, 0, 0, 0.6) !important; backdrop-filter: blur(10px) saturate(125%); z-index: 2; -webkit-backdrop-filter: blur(10px) saturate(125%);">
@@ -159,10 +154,11 @@ if (isset($_SESSION['user'])) {
                 data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
                 aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
-                    <li class="nav-item me-4"><a class="nav-link" aria-current="page" href="admin.php">HOME</a>
+                <ul class="navbar-nav align-items-center me-auto mb-2 mb-lg-0 ms-lg-4">
+                    <li class="nav-item me-lg-4 d-lg-block"><a class="nav-link" aria-current="page"
+                            href="admin.php">HOME</a>
                     </li>
-                    <div class="nav-item me-4 dropdown">
+                    <div class="nav-item me-lg-4 d-lg-block dropdown">
                         <a href="#" class="nav-link dropdown-toggle active" data-bs-toggle="dropdown">MANAGE DATA</a>
                         <div class="dropdown-menu dropdown-menu-dark">
                             <a href="manage_produk.php" class="dropdown-item">Manage Produk</a>
@@ -174,14 +170,14 @@ if (isset($_SESSION['user'])) {
                     </div>
                 </ul>
 
-                <ul class="navbar-nav mb-2 mb-lg-0 ms-lg-4">
-                    <li class="nav-item">
-                        <a class="nav-link me-4" href="">
+                <ul class="navbar-nav align-items-center mb-2 mb-lg-0 ms-lg-4">
+                    <li class="nav-item me-lg-4 d-lg-block">
+                        <a class="nav-link" href="">
                             Welcome,
                             <?php echo $userName; ?> <i class="bi bi-person-circle"></i>
                         </a>
                     </li>
-                    <li class="nav-item">
+                    <li class="nav-item me-lg-4 d-lg-block">
                         <button type="button" class="btn btn-outline-light" data-bs-toggle="modal"
                             data-bs-target="#logoutModal">Log Out</button>
                     </li>
@@ -190,26 +186,22 @@ if (isset($_SESSION['user'])) {
         </div>
     </nav>
 
-    <!-- Page Wrapper -->
-    <div id="wrapper">
-        <!-- Content Wrapper -->
+    <div id="wrapper" style='margin-top: 150px !important; margin-bottom: 40px !important;'>
         <div id="content-wrapper" class="d-flex flex-column">
-            <!-- Main Content -->
             <div id="content">
-                <div class="container" style="padding: 160px 0 20px 0;">
-                    <div class="card mb-4">
-
+                <div class="container" style="padding: 40px 0 20px 0;">
+                    <div class="card border-black text-white mb-4 animate"
+                        style='border-radius: 1rem;background-color: rgb(0, 0, 0, 0.4) !important'>
                         <div class="card-header py-3">
                             <div class="row align-items-center justify-content-between">
                                 <div class="col-md-6">
-                                    <h6 class="m-0 font-weight-bold text-dark"><strong>Riwayat Pembelian User</strong>
-                                    </h6>
+                                    <h6 class="m-0 font-weight-bold text-light"><strong>Riwayat Transaksi User</strong></h6>
                                 </div>
                                 <div class="col-md-6 d-flex justify-content-end">
                                     <div class="dropdown" style="position: relative;">
-                                        <button class="btn btn-light btn-outline-dark dropdown-toggle" type="button"
-                                            id="filterDropdown" data-bs-toggle="dropdown" aria-expanded="false">
-                                            Filter By
+                                        <button class="btn btn-dark dropdown-toggle" type="button" id="filterDropdown"
+                                            data-bs-toggle="dropdown" aria-expanded="false">
+                                            <strong> <i class="fa-solid fa-filter"></i> Filter By Status </strong>
                                         </button>
                                         <ul class="dropdown-menu checkbox-menu dropdown-menu-end" data-bs-theme="dark"
                                             style="z-index: 3;" aria-labelledby="dropdownMenuButton">
@@ -237,12 +229,11 @@ if (isset($_SESSION['user'])) {
                             </div>
                         </div>
 
+
                         <div class="card-body">
-
                             <div class="table-responsive">
-
-                                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-
+                                <table class="table table-bordered table-dark" id="dataTable" width="100%"
+                                    cellspacing="0" style="--bs-table-bg: rgb(0, 0, 0, 0.2) !important;">
                                     <thead>
                                         <tr>
                                             <th>Invoice</th>
@@ -253,16 +244,6 @@ if (isset($_SESSION['user'])) {
                                             <th>Status</th>
                                         </tr>
                                     </thead>
-                                    <!-- <tfoot>
-                                        <tr>
-                                            <th>Username</th>
-                                            <th>Product Name</th>
-                                            <th>Price</th>
-                                            <th>Payment Method</th>
-                                            <th>Date</th>
-                                            <th>Invoice</th>
-                                        </tr>
-                                    </tfoot> -->
                                     <tbody id="tableBody">
                                         <?php
                                         foreach ($rows as $row) {
@@ -297,22 +278,16 @@ if (isset($_SESSION['user'])) {
                             </div>
                         </div>
                     </div>
-
                 </div>
-                <!-- /.container-fluid -->
-
             </div>
-            <!-- End of Main Content -->
         </div>
-        <!-- End of Content Wrapper -->
-
     </div>
 
     <!-- modal logout-->
     <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
         aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
+            <div class="modal-content bg-dark text-white">
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel">Are you sure you want to Logout?</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -325,23 +300,20 @@ if (isset($_SESSION['user'])) {
             </div>
         </div>
     </div>
-    <!-- modal -->
 
     <script>
         function logout() {
-            // Buat permintaan AJAX ke server untuk menghapus sesi
             var xhr = new XMLHttpRequest();
             xhr.open('GET', 'logout.php', true);
             xhr.onreadystatechange = function () {
                 if (xhr.readyState == 4 && xhr.status == 200) {
-                    // Jika sesi dihapus dengan sukses, redirect ke halaman index.php
                     window.location.href = 'index.php';
                 }
             };
             xhr.send();
         }
 
-        
+
 
         $(document).ready(function () {
             $('#dataTable').DataTable();
@@ -373,7 +345,6 @@ if (isset($_SESSION['user'])) {
 
 
     <script>
-        // Prevent dropdown from closing when clicking on checkboxes
         $('.dropdown-menu').on('click', function (e) {
             e.stopPropagation();
         });
