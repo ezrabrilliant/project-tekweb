@@ -17,8 +17,6 @@ INNER JOIN game ON item.game_id = game.game_id WHERE invoice.status_transaksi=1;
 
 if (isset($_SESSION['user'])) {
     $user = $_SESSION['user'];
-
-    // Access user information
     $memberId = $user['member_id'];
     $userEmail = $user['email'];
     $userName = $user['username'];
@@ -27,14 +25,10 @@ if (isset($_SESSION['user'])) {
         header('location: home.php');
     }
 } else {
-    // Redirect or display an error message if the user is not logged in
-    header('location: login.php'); // Redirect to the login page
+    header('location: login.php');
     exit;
 }
-
-
 ?>
-
 
 <!DOCTYPE html>
 <html lang="en">
@@ -44,63 +38,32 @@ if (isset($_SESSION['user'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <meta name="description" content="" />
     <meta name="author" content="" />
-    <title>Topup Game - Proyek Tekweb</title>
-    <!-- Favicon-->
+    <title>Admin Page - PAY2WIN</title>
+
+    <link rel="stylesheet" href="css/styles.css">
+    <script src="js/scripts.js"></script>
     <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
-
-
     <script src="https://kit.fontawesome.com/785e8a7b97.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css">
-    <script defer src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
-
-    <style>
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .card {
-            opacity: 0;
-        }
-
-        .animate {
-            animation: fadeIn 0.8s ease-out;
-            animation-fill-mode: forwards;
-        }
-
-        body {
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            margin: 0;
-        }
-
-        main {
-            flex-grow: 1;
-        }
-
-        footer {
-            margin-top: auto;
-        }
-    </style>
 </head>
 
-<body class="bg-dark">
-    
+<body>
+
+    <div class="blob-c">
+        <div class="shape-blob one"></div>
+        <div class="shape-blob two"></div>
+        <div class="shape-blob three"></div>
+        <div class="shape-blob four"></div>
+        <div class="shape-blob five"></div>
+        <div class="shape-blob six"></div>
+    </div>
+
     <!-- Navigation-->
     <nav class="py-4 navbar navbar-expand-lg navbar-dark fixed-top"
         style="background: rgba(0, 0, 0, 0.6) !important; backdrop-filter: blur(10px) saturate(125%); z-index: 2; -webkit-backdrop-filter: blur(10px) saturate(125%);">
         <div class="container px-4 px-lg-5 text-white">
-            <a class="navbar-brand" style="height: 52px;" href="home.php">
+            <a class="navbar-brand" style="height: 52px;" href="admin.php">
                 <img src="assets\Web Logo\pay-2-win-full.png" alt="PAY2WIN Logo" class="img-fluid"
                     style="max-height: 50px;margin-top: -2px;height: 100%;object-fit: cover;">
             </a>
@@ -108,10 +71,11 @@ if (isset($_SESSION['user'])) {
                 data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
                 aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
-                    <li class="nav-item me-4"><a class="nav-link active" aria-current="page" href="admin.php">HOME</a>
+                <ul class="navbar-nav align-items-center me-auto mb-2 mb-lg-0 ms-lg-4">
+                    <li class="nav-item me-lg-4 d-lg-block"><a class="nav-link active" aria-current="page"
+                            href="admin.php">HOME</a>
                     </li>
-                    <div class="nav-item me-4 dropdown">
+                    <div class="nav-item me-lg-4 d-lg-block dropdown">
                         <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">MANAGE DATA</a>
                         <div class="dropdown-menu dropdown-menu-dark">
                             <a href="manage_produk.php" class="dropdown-item">Manage Produk</a>
@@ -123,14 +87,14 @@ if (isset($_SESSION['user'])) {
                     </div>
                 </ul>
 
-                <ul class="navbar-nav mb-2 mb-lg-0 ms-lg-4">
-                    <li class="nav-item">
-                        <a class="nav-link me-4" href="">
+                <ul class="navbar-nav align-items-center mb-2 mb-lg-0 ms-lg-4">
+                    <li class="nav-item me-lg-4 d-lg-block">
+                        <a class="nav-link" href="">
                             Welcome,
                             <?php echo $userName; ?> <i class="bi bi-person-circle"></i>
                         </a>
                     </li>
-                    <li class="nav-item">
+                    <li class="nav-item me-lg-4 d-lg-block">
                         <button type="button" class="btn btn-outline-light" data-bs-toggle="modal"
                             data-bs-target="#logoutModal">Log Out</button>
                     </li>
@@ -147,7 +111,7 @@ if (isset($_SESSION['user'])) {
 
                 <!-- Total Produk Card -->
                 <div class="col mb-5">
-                    <div class='card text-white mb-3 h-100 d-flex align-items-center'
+                    <div class='card animate text-white mb-3 h-100 d-flex align-items-center'
                         style='border-radius: 1rem; background-color: rgba(10, 10, 12, 0.4) !important'>
                         <div class='card-body p-4'>
                             <div class='text-center'>
@@ -168,7 +132,7 @@ if (isset($_SESSION['user'])) {
 
                 <!-- Manage Saldo User Card -->
                 <div class="col mb-5">
-                    <div class='card text-white mb-3 h-100 d-flex align-items-center'
+                    <div class='card animate text-white mb-3 h-100 d-flex align-items-center'
                         style='border-radius: 1rem; background-color: rgba(10, 10, 12, 0.4) !important'>
                         <div class='card-body p-4'>
                             <div class='text-center'>
@@ -189,8 +153,7 @@ if (isset($_SESSION['user'])) {
 
                 <!-- Riwayat Saldo User Card -->
                 <div class="col mb-5">
-                    <div class='card text-white mb-3 h-100 d-flex align-items-center'
-                        style='border-radius: 1rem; background-color: rgba(10, 10, 12, 0.4) !important'>
+                    <div class='card animate text-white mb-3 h-100 d-flex align-items-center'style='border-radius: 1rem; background-color: rgba(10, 10, 12, 0.4) !important'>
                         <div class='card-body p-4'>
                             <div class='text-center'>
                                 <h4 class='fw-bolder'>Total Saldo Semua User</h4>
@@ -216,7 +179,7 @@ if (isset($_SESSION['user'])) {
 
                 <!-- Manage Transaksi Card -->
                 <div class="col mb-5">
-                    <div class='card text-white mb-3 h-100 d-flex align-items-center'
+                    <div class='card animate text-white mb-3 h-100 d-flex align-items-center'
                         style='border-radius: 1rem; background-color: rgba(10, 10, 12, 0.4) !important'>
                         <div class='card-body p-4'>
                             <div class='text-center'>
@@ -237,7 +200,7 @@ if (isset($_SESSION['user'])) {
 
                 <!-- Riwayat Pembelian User Card -->
                 <div class="col mb-5">
-                    <div class='card text-white mb-3 h-100 d-flex align-items-center'
+                    <div class='card animate text-white mb-3 h-100 d-flex align-items-center'
                         style='border-radius: 1rem; background-color: rgba(10, 10, 12, 0.4) !important'>
                         <div class='card-body p-4'>
                             <div class='text-center'>
@@ -264,10 +227,6 @@ if (isset($_SESSION['user'])) {
         </div>
     </section>
 
-
-
-
-
     <!-- modal -->
     <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
         aria-hidden="true">
@@ -288,23 +247,99 @@ if (isset($_SESSION['user'])) {
     <!-- modal -->
 
 
-    <!-- script -->
     <script>
+        // Logout Script
         function logout() {
-            // Buat permintaan AJAX ke server untuk menghapus sesi
             var xhr = new XMLHttpRequest();
             xhr.open('GET', 'logout.php', true);
             xhr.onreadystatechange = function () {
                 if (xhr.readyState == 4 && xhr.status == 200) {
-                    // Jika sesi dihapus dengan sukses, redirect ke halaman index.php
                     window.location.href = 'index.php';
                 }
             };
             xhr.send();
         }
-    </script>
 
-    <script>
+        // Balance Info Script
+        $(document).ready(function () {
+            $('.balance-info-btn').on('click', function () {
+                var memberId = $(this).data('id');
+                var saldo = $(this).data('saldo');
+
+                console.log(memberId);
+                console.log(saldo);
+                $('#user_id').val(memberId);
+                $('#curBalance').val(saldo);
+                $('#balanceInfo').modal('show');
+            });
+        });
+
+        // Top Up Script
+        $(document).ready(function () {
+            $('#topUpForm').on('submit', function (event) {
+                event.preventDefault();
+
+                var amount = parseFloat($(this).find('input[name="inputAmount"]').val());
+                if (isNaN(amount) || amount <= 0) {
+                    $('#alertContainer').html('<div class="alert alert-danger alert-dismissible fade show" role="alert">Please enter a valid amount.</div>');
+                    return false;
+                }
+                var formattedAmount = new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(amount);
+
+                $('#totalAmount').text(formattedAmount);
+
+
+                amount = document.getElementById('inputAmount').value;
+                console.log(amount);
+                $('#paymentDetails').show();
+                $('#amount').val(amount);
+
+                $(this).find('input[name="inputAmount"]').prop('disabled', true);
+                $(this).find('input[name="login-btn"]').prop('disabled', true);
+
+            });
+
+            $('#topUpForm').on('click', 'input[name="login-btn"]', function () {
+                $('#topUpForm').submit();
+            });
+
+            $('#confirmForm').on('submit', function (event) {
+                event.preventDefault();
+                $.ajax({
+                    type: 'post',
+                    url: 'request_saldo.php',
+                    data: $(this).serialize(),
+                    success: function (response) {
+                        $('#editGameModal').modal('hide');
+                        alert('Permintaan isi saldo sudah dikirim ke admin kami, harap tunggu beberapa saat :).');
+                        location.reload();
+
+                    },
+                    error: function (xhr, status, error) {
+                        console.error('Terjadi kesalahan: ' + error);
+                    }
+                });
+            });
+        });
+
+        //Copy Button Script
+        const target = document.getElementById('copy1');
+        const button = target.nextElementSibling;
+        const clipboard = new ClipboardJS(button);
+        clipboard.on('success', function (e) {
+            var checkIcon = button.querySelector('.ki-check');
+            var copyIcon = button.querySelector('.ki-copy');
+            if (checkIcon) {
+                return;
+            }
+        });
+
+        $('#balanceInfo').on('hidden.bs.modal', function () {
+            location.reload();
+        });
+
+
+
         // Animate Card
         document.addEventListener("DOMContentLoaded", function () {
             var options = {
