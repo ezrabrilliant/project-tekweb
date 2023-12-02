@@ -10,15 +10,10 @@ $stmt = $pdo->query(
 $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
 if (isset($_SESSION['user'])) {
     $user = $_SESSION['user'];
-
-    // Access user information
     $memberId = $user['member_id'];
     $userEmail = $user['email'];
     $userName = $user['username'];
-    // Add more fields as needed
 
-    // Display user information
-    // echo "Welcome, $userName! Your email is $userEmail.";
     $stmt = $pdo->query(
         "SELECT * FROM users
         INNER JOIN invoice
@@ -30,7 +25,6 @@ if (isset($_SESSION['user'])) {
     );
     $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
 } else {
-    // Redirect or display an error message if the user is not logged in
     header('location: login.php'); // Redirect to the login page
     exit;
 }
@@ -41,14 +35,17 @@ if (isset($_SESSION['user'])) {
 <html lang="en">
 
 <head>
-<meta charset="utf-8">
+    <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Manage Transaksi</title>
+    <title>
+        Manage Transaksi - PAY2WIN
+    </title>
 
+    <link rel="stylesheet" href="css/styles.css">
     <script src="https://kit.fontawesome.com/785e8a7b97.js" crossorigin="anonymous"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <link rel="stylesheet"
@@ -59,27 +56,18 @@ if (isset($_SESSION['user'])) {
     <script defer src="https://code.jquery.com/jquery-3.7.0.js"></script>
     <script defer src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
     <script defer src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
-
-
-    <style>
-        body {
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            margin: 0;
-        }
-
-        main {
-            flex-grow: 1;
-        }
-
-        footer {
-            margin-top: auto;
-        }
-    </style>
 </head>
 
 <body class="bg-dark">
+
+    <div class="blob-c">
+        <div class="shape-blob one"></div>
+        <div class="shape-blob two"></div>
+        <div class="shape-blob three"></div>
+        <div class="shape-blob four"></div>
+        <div class="shape-blob five"></div>
+        <div class="shape-blob six"></div>
+    </div>
 
     <!-- Navigation-->
     <nav class="py-4 navbar navbar-expand-lg navbar-dark fixed-top"
@@ -93,10 +81,11 @@ if (isset($_SESSION['user'])) {
                 data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
                 aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
-                    <li class="nav-item me-4"><a class="nav-link" aria-current="page" href="admin.php">HOME</a>
+                <ul class="navbar-nav align-items-center me-auto mb-2 mb-lg-0 ms-lg-4">
+                    <li class="nav-item me-lg-4 d-lg-block"><a class="nav-link" aria-current="page"
+                            href="admin.php">HOME</a>
                     </li>
-                    <div class="nav-item me-4 dropdown">
+                    <div class="nav-item me-lg-4 d-lg-block dropdown">
                         <a href="#" class="nav-link dropdown-toggle active" data-bs-toggle="dropdown">MANAGE DATA</a>
                         <div class="dropdown-menu dropdown-menu-dark">
                             <a href="manage_produk.php" class="dropdown-item">Manage Produk</a>
@@ -108,14 +97,14 @@ if (isset($_SESSION['user'])) {
                     </div>
                 </ul>
 
-                <ul class="navbar-nav mb-2 mb-lg-0 ms-lg-4">
-                    <li class="nav-item">
-                        <a class="nav-link me-4" href="">
+                <ul class="navbar-nav align-items-center mb-2 mb-lg-0 ms-lg-4">
+                    <li class="nav-item me-lg-4 d-lg-block">
+                        <a class="nav-link" href="">
                             Welcome,
                             <?php echo $userName; ?> <i class="bi bi-person-circle"></i>
                         </a>
                     </li>
-                    <li class="nav-item">
+                    <li class="nav-item me-lg-4 d-lg-block">
                         <button type="button" class="btn btn-outline-light" data-bs-toggle="modal"
                             data-bs-target="#logoutModal">Log Out</button>
                     </li>
@@ -124,21 +113,20 @@ if (isset($_SESSION['user'])) {
         </div>
     </nav>
 
-    <!-- Page Wrapper -->
-    <div id="wrapper">
-        <!-- Content Wrapper -->
+    <div id="wrapper" style='margin-top: 150px !important; margin-bottom: 40px !important;'>
         <div id="content-wrapper" class="d-flex flex-column">
-            <!-- Main Content -->
             <div id="content">
-                <div class="container" style="padding: 160px 0 20px 0;">
-                    <div class="card mb-4">
+                <div class="container" style="padding: 40px 0 20px 0;">
+                    <div class="card border-black text-white mb-4 animate"
+                        style='border-radius: 1rem;background-color: rgb(0, 0, 0, 0.4) !important'>
                         <div class="card-header py-3">
-                            <h6 class="m-0 font-weight-bold text-dark"><strong>List Request Topup Resource User</strong>
+                            <h6 class="m-0 font-weight-bold text-light"><strong>List Request Topup Resource User</strong>
                             </h6>
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
-                                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                <table class="table table-bordered table-dark" id="dataTable" width="100%"
+                                    cellspacing="0" style="--bs-table-bg: rgb(0, 0, 0, 0.2) !important;">
                                     <thead>
                                         <tr>
                                             <th>Invoice ID</th>
@@ -175,10 +163,7 @@ if (isset($_SESSION['user'])) {
                                             echo "<td>$uid_game</td>";
                                             echo "<td>$jml_resource</td>";
                                             echo "<td> Rp " . number_format($harga, 0, ',', '.') . "</td>";
-                                            // echo "<td>$harga</td>";
                                             echo "<td><button class='acc-req-btn btn btn-primary btn-sm' data-invoice-id='$invoiceId' data-member-id='$memberId' data-harga='$harga'><i class='fa-solid fa-check'></i></button>";
-
-                                            //echo "<td><button class='edit-admin-btn btn btn-primary btn-sm' data-id='$member_id' data-username='$username' data-email='$email' data-phone='$phone' data-total-spent='$total_spent'>Edit</button>";
                                             echo "<button class='dec-req-btn btn btn-danger btn-sm' data-invoice-id='$invoiceId' data-member-id='$memberId' data-harga='$harga' style='margin-left:10px;'><i class='fa-solid fa-xmark'></i></button></td>";
                                             echo "</tr>";
                                         }
@@ -188,22 +173,16 @@ if (isset($_SESSION['user'])) {
                             </div>
                         </div>
                     </div>
-
                 </div>
-                <!-- /.container-fluid -->
-
             </div>
-            <!-- End of Main Content -->
         </div>
-        <!-- End of Content Wrapper -->
-
     </div>
 
-    <!-- modal -->
+    <!-- modal logout-->
     <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
         aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
+            <div class="modal-content bg-dark text-white">
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel">Are you sure you want to Logout?</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -216,25 +195,27 @@ if (isset($_SESSION['user'])) {
             </div>
         </div>
     </div>
-    <!-- modal -->
 
     <!-- Modal Konfirmasi Kirim Resource User -->
     <div class="modal fade" id="confirmModal" tabindex="-1" role="dialog" aria-labelledby="confirmModalLabel"
         aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
+            <div class="modal-content bg-dark text-white">
                 <div class="modal-header">
                     <h5 class="modal-title" id="confirmModalLabel">Konfirmasi Pengiriman Resource Game</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <!-- Form untuk mengedit informasi pengguna -->
-                    <p>Apakah UID Valid ?</p>
+                    <p>Apakah Anda yakin ingin mengirim resource game kepada pengguna?</p>
                     <form id="konfirmasiResource">
                         <input type="hidden" id="updateMemberId" name="updateMemberId">
                         <input type="hidden" id="updateInvoiceId" name="updateInvoiceId">
                         <input type="hidden" id="updateHarga" name="updateHarga">
-                        <button type="submit" class="btn btn-primary">Iya sudah</button>
+                        <div class="text-center d-flex justify-content-between" style="padding:10px 0 0 0">
+                            <button type="button" class="btn text-white btn-danger" data-bs-dismiss="modal"aria-label="Close"><i class="fa-solid fa-ban" style="padding-right:10px;"></i> Cancel</button>
+                            <input type="hidden" id="editGameId" name="editGameId">
+                            <button type="submit" class="btn btn-success"> <i class="fa-solid fa-check" style="padding-right:10px;"></i>Yes</button>
+                        </div>
                     </form>
                 </div>
             </div>
@@ -242,23 +223,26 @@ if (isset($_SESSION['user'])) {
     </div>
 
 
-    <!-- Modal Konfirmasi Kirim Resource User -->
+    <!-- Modal Tolak Kirim Resource User -->
     <div class="modal fade" id="rejectModal" tabindex="-1" role="dialog" aria-labelledby="rejectModalLabel"
         aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
+            <div class="modal-content bg-dark text-white">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="rejectModalLabel">Konfirmasi Pengiriman Resource Game</h5>
+                    <h5 class="modal-title" id="rejectModalLabel">Tolak Pengiriman Resource Game</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <!-- Form untuk mengedit informasi pengguna -->
-                    <p>Apakah UID Invalid ?</p>
+                    <p>Apakah Anda yakin ingin menolak pengiriman resource game kepada pengguna?<br><br>Saldo akan dikembalikan kepada pengguna.</p>
                     <form id="declineResource">
                         <input type="hidden" id="decMemberId" name="decMemberId">
                         <input type="hidden" id="decInvoiceId" name="decInvoiceId">
                         <input type="hidden" id="decHarga" name="decHarga">
-                        <button type="submit" class="btn btn-danger">Iya UID Invalid</button>
+                        <div class="text-center d-flex justify-content-between" style="padding:10px 0 0 0">
+                            <button type="button" class="btn text-white btn-danger" data-bs-dismiss="modal"aria-label="Close"><i class="fa-solid fa-ban" style="padding-right:10px;"></i> Cancel</button>
+                            <input type="hidden" id="editGameId" name="editGameId">
+                            <button type="submit" class="btn btn-success"> <i class="fa-solid fa-check" style="padding-right:10px;"></i>Yes</button>
+                        </div>
                     </form>
                 </div>
             </div>
@@ -267,12 +251,10 @@ if (isset($_SESSION['user'])) {
 
     <script>
         function logout() {
-            // Buat permintaan AJAX ke server untuk menghapus sesi
             var xhr = new XMLHttpRequest();
             xhr.open('GET', 'logout.php', true);
             xhr.onreadystatechange = function () {
                 if (xhr.readyState == 4 && xhr.status == 200) {
-                    // Jika sesi dihapus dengan sukses, redirect ke halaman index.php
                     window.location.href = 'index.php';
                 }
             };
@@ -280,6 +262,7 @@ if (isset($_SESSION['user'])) {
         }
 
         $(document).ready(function () {
+
             // Event delegation for "UID Game Valid" buttons
             $('#dataTable').on('click', '.acc-req-btn', function () {
                 var memberId = $(this).data('member-id');
@@ -306,59 +289,48 @@ if (isset($_SESSION['user'])) {
                 $('#rejectModal').modal('show');
             });
 
-            // Mengelola tombol "Edit" ketika diklik
+            // Ketika tombol konfirmasi diklik
             $('.acc-req-btn').on('click', function () {
                 var memberId = $(this).data('member-id');
                 var invoiceId = $(this).data('invoice-id');
                 var harga = $(this).data('harga');
-
-
-
-                // Mengisi nilai input modal edit dengan data pengguna yang akan diedit
                 $('#updateMemberId').val(memberId);
                 $('#updateInvoiceId').val(invoiceId);
                 $('#updateHarga').val(harga);
-
-                // Menampilkan modal edit
                 $('#confirmModal').modal('show');
             });
 
-            // Mengirim data pengguna yang diperbarui menggunakan AJAX
+            // Ketika tombol tolak diklik
             $('#konfirmasiResource').on('submit', function (event) {
                 event.preventDefault();
                 $.ajax({
                     type: 'POST',
-                    url: 'acc_req_resource.php', // Ganti dengan nama file yang sesuai di server Anda
+                    url: 'acc_req_resource.php',
                     data: $(this).serialize(),
                     success: function (response) {
-                        // Tindakan setelah perubahan pengguna disimpan (misalnya, menutup modal)
                         $('#confirmModal').modal('hide');
                         alert('Request resource pengguna telah dikirim.');
-                        // Refresh halaman untuk memperbarui tampilan riwayat pembelian pengguna
                         location.reload();
                     },
                     error: function (xhr, status, error) {
-                        // Tindakan jika penyimpanan perubahan gagal
                         console.error('Terjadi kesalahan: ' + error);
                     }
                 });
             });
 
+            // Ketika tombol tolak diklik
             $('#declineResource').on('submit', function (event) {
                 event.preventDefault();
                 $.ajax({
                     type: 'POST',
-                    url: 'dec_req_resource.php', // Ganti dengan nama file yang sesuai di server Anda
+                    url: 'dec_req_resource.php',
                     data: $(this).serialize(),
                     success: function (response) {
-                        // Tindakan setelah perubahan pengguna disimpan (misalnya, menutup modal)
                         $('#rejectModal').modal('hide');
                         alert('Request resource pengguna telah ditolak dan saldo dikembalikan ke pengguna.');
-                        // Refresh halaman untuk memperbarui tampilan riwayat pembelian pengguna
                         location.reload();
                     },
                     error: function (xhr, status, error) {
-                        // Tindakan jika penyimpanan perubahan gagal
                         console.error('Terjadi kesalahan: ' + error);
                     }
                 });
@@ -368,9 +340,7 @@ if (isset($_SESSION['user'])) {
 
     </script>
 
-
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="js/scripts.js"></script>
 </body>
 
 <footer class="py-5 bg-dark" style="background-color: rgb(10, 10, 12) !important">
@@ -378,6 +348,5 @@ if (isset($_SESSION['user'])) {
         <p class="m-0 text-center text-white">Copyright &copy; PAY2WIN 2023</p>
     </div>
 </footer>
-
 
 </html>
