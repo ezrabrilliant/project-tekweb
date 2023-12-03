@@ -21,6 +21,13 @@ Project ini menggunakan framework bootstrap, yaitu framework yang digunakan untu
 - CRUD
 - Responsive
 
+## Kebutuhan Sistem
+- XAMPP
+- Browser (Google Chrome, Mozilla Firefox, Microsoft Edge, Safari, dll)
+
+## Link Website
+- link website : https://www.pay2win.pw
+
 ## Instalasi
 1. Clone repository ini.
 2. Buka folder project ini.
@@ -38,4 +45,4 @@ Project ini menggunakan framework bootstrap, yaitu framework yang digunakan untu
 
 ## Laporan
 ### 1. Penjelasan mengenai tampilan website
-Website ini merupakan website yang berisi informasi mengenai topup game. Website ini dibuat menggunakan framework Bootstrap. Pada website ini terdapat 2 halaman utama yaitu home.php, serta admin.php. Pada halaman home.php dapat melakukan topup saldo, membeli produk pada game serta pulsa tertentu. Pada halaman admin.php terdapat fitur CRUD untuk mengelola data produk, data pembelian, serta data user.
+Website ini merupakan website yang berisi informasi mengenai topup game. Website ini dibuat menggunakan framework Bootstrap. Pada website ini terdapat 2 halaman utama yaitu `home.php`, serta `admin.php`. Pada halaman `home.php` dapat melakukan topup saldo, membeli produk pada game serta pulsa tertentu. Pada halaman `admin.php` terdapat fitur CRUD untuk mengelola data produk, data pembelian, serta data user.
