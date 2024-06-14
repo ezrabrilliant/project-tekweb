@@ -69,8 +69,9 @@ if (isset($_SESSION['user'])) {
         $memberId = $user['member_id'];
         $userEmail = $user['email'];
         $userName = $user['username'];
+        $saldo = number_format($user['saldo'], 2, ',', '.');
         echo "
-            <nav class='py-4 navbar navbar-expand-lg navbar-dark fixed-top' style='background: rgba(0, 0, 0, 0.4) !important; backdrop-filter: blur(10px) saturate(125%); z-index: 2; -webkit-backdrop-filter: blur(10px) saturate(125%);'>
+            <nav class='py-4 navbar navbar-expand-lg navbar-dark fixed-top' style='background: rgba(0, 0, 0, 0.6) !important; backdrop-filter: blur(10px) saturate(125%); z-index: 2; -webkit-backdrop-filter: blur(10px) saturate(125%);'>
                 <div class='container px-4 px-lg-5 text-white'>
                     <a class='navbar-brand' style='height: 52px;' href='home.php'>
                         <img src='assets\Web Logo\pay-2-win-full.png' alt='PAY2WIN Logo' class='img-fluid'
@@ -85,8 +86,11 @@ if (isset($_SESSION['user'])) {
                             <li class='nav-item me-lg-4 d-lg-block'><a class='nav-link' aria-current='page' href='home.php'>HOME</a></li>
                             <li class='nav-item me-lg-4 d-lg-block'><a class='nav-link active' href='about.php'>ABOUT</a></li>
                             <li class='nav-item me-lg-4 d-lg-block'><a class='nav-link' href='history_transaction.php'>HISTORY TRANSACTION</a></li>
-                            <li class='nav-item me-lg-4 d-lg-block'><button type='button' class='balance-info-btn btn btn-outline-light' data-id='<?php echo $memberId; ?>' data-saldo='<?php echo $saldo; ?>' data-bs-toggle='modal' data-bs-target='#balanceInfo'>BALANCE & TOP UP</button></li>
-                        </ul>
+
+                            <li class='nav-item me-lg-4 d-lg-block'><button type='button'
+                            class='balance-info-btn btn btn-outline-light' data-id='$memberId'
+                            data-saldo='$saldo;' data-bs-toggle='modal'
+                            data-bs-target='#balanceInfo'>Balance: Rp. $saldo</button></li>                        </ul>
 
                         <ul class='navbar-nav align-items-center'>
                             <li class='nav-item me-lg-4 d-lg-block'><a class='nav-link' href='#'><p class='mb-0'>Welcome, $userName</p></a></li>
@@ -335,7 +339,7 @@ if (isset($_SESSION['user'])) {
 </body>
 
 <!-- Footer-->
-<footer class="py-5 bg-dark" style="background-color: rgb(0, 0, 0, 0.4) !important">
+<footer class="py-5 bg-dark" style="background-color: rgb(0, 0, 0, 0.6) !important">
     <div class="container">
         <p class="m-0 text-center text-white">Copyright &copy; PAY2WIN 2023</p>
     </div>
