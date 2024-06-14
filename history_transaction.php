@@ -88,7 +88,7 @@ if (isset($_SESSION['user'])) {
 
     <!-- Navigation -->
     <nav class="py-4 navbar navbar-expand-lg navbar-dark fixed-top"
-        style="background: rgba(0, 0, 0, 0.4) !important; backdrop-filter: blur(10px) saturate(125%); z-index: 2; -webkit-backdrop-filter: blur(10px) saturate(125%);">
+        style="background: rgba(0, 0, 0, 0.6) !important; backdrop-filter: blur(10px) saturate(125%); z-index: 2; -webkit-backdrop-filter: blur(10px) saturate(125%);">
         <div class="container px-4 px-lg-5 text-white">
             <a class="navbar-brand" style="height: 52px;" href="home.php">
                 <img src="assets\Web Logo\pay-2-win-full.png" alt="PAY2WIN Logo" class="img-fluid"
@@ -107,7 +107,7 @@ if (isset($_SESSION['user'])) {
                     <li class="nav-item me-lg-4 d-lg-block"><button type="button"
                             class="balance-info-btn btn btn-outline-light" data-id="<?php echo $memberId; ?>"
                             data-saldo="<?php echo $saldo; ?>" data-bs-toggle="modal"
-                            data-bs-target="#balanceInfo">BALANCE & TOP UP</button></li>
+                            data-bs-target="#balanceInfo">Balance: Rp. <?php echo number_format($saldo, 2, ',', '.') ?></button></li>   
                 </ul>
 
                 </ul>
@@ -131,7 +131,7 @@ if (isset($_SESSION['user'])) {
             <div id="content">
                 <div class="container" style="padding: 40px 0 20px 0;">
                     <div class="card animate border-black text-white mb-4"
-                        style='border-radius: 1rem;background-color: rgb(0, 0, 0, 0.4) !important'>
+                        style='border-radius: 1rem;background-color: rgb(0, 0, 0, 0.6) !important'>
                         <div class="card-header py-3">
                             <h6 class="m-0 font-weight-bold"><strong>Riwayat Pembelian User</strong></h6>
                         </div>
@@ -433,7 +433,7 @@ if (isset($_SESSION['user'])) {
 </body>
 
 <!-- Footer-->
-<footer class="py-5 bg-dark" style="background-color: rgb(0, 0, 0, 0.4) !important">
+<footer class="py-5 bg-dark" style="background-color: rgb(0, 0, 0, 0.6) !important">
     <div class="container">
         <p class="m-0 text-center text-white">Copyright &copy; PAY2WIN 2023</p>
     </div>
