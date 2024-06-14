@@ -50,8 +50,8 @@ $rows1 = $stmt1->fetchAll(PDO::FETCH_ASSOC);
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <meta name="description" content="" />
     <meta name="author" content="" />
-    <title>Topup Game - Proyek Tekweb</title>
-    <link rel="icon" href="assets\Web Logo\pay-2-win-full.png" />
+    <title>Topup Game - PAY2WIN</title>
+    <link rel="icon" href="assets\Web Logo\pay-2-win-logo.png" />
     
     <link rel="stylesheet" href="css/styles.css">
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
@@ -59,6 +59,13 @@ $rows1 = $stmt1->fetchAll(PDO::FETCH_ASSOC);
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     
     <style>
+
+.carousel-inner img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
     @keyframes fadeIn {
         from {
             opacity: 0;
@@ -100,7 +107,7 @@ $rows1 = $stmt1->fetchAll(PDO::FETCH_ASSOC);
 
     <!-- Navigation -->
     <nav class="py-4 navbar navbar-expand-lg navbar-dark fixed-top"
-        style="background: rgba(0, 0, 0, 0.4) !important; backdrop-filter: blur(10px) saturate(125%); z-index: 2; -webkit-backdrop-filter: blur(10px) saturate(125%);">
+        style="background: rgba(0, 0, 0, 0.6) !important; backdrop-filter: blur(10px) saturate(125%); z-index: 2; -webkit-backdrop-filter: blur(10px) saturate(125%);">
         <div class="container px-4 px-lg-5 text-white">
             <a class="navbar-brand" style="height: 52px;" href="index.php">
                 <img src="assets\Web Logo\pay-2-win-full.png" alt="PAY2WIN Logo" class="img-fluid"
@@ -136,35 +143,41 @@ $rows1 = $stmt1->fetchAll(PDO::FETCH_ASSOC);
 
     <!-- Header-->
     <header class="py-3">
-        <div class="container px-4 px-lg-5" style="margin-top: 150px !important; margin-bottom: 40px !important;">
-            <div id="carouselExampleIndicators" class="carousel slide">
-                <div class="carousel-indicators" style="z-index: 1;">
-                    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0"
-                        class="active" aria-current="true" aria-label="Slide 1"></button>
-                    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1"
-                        aria-label="Slide 2"></button>
-                </div>
-                <div class="carousel-inner" style="border-radius: 1rem;">
-                    <div class="carousel-item active" data-bs-interval="3000">
-                        <img src="assets/coc_home.jpg" class="d-block w-100" alt="..." >
-                    </div>
-                    <div class="carousel-item" data-bs-interval="3000">
-                        <img src="assets/hsr_banner.jpg" class="d-block w-100" alt="...">
-                    </div>
-                </div>
-                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators"
-                    data-bs-slide="prev">
-                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                    <span class="visually-hidden">Previous</span>
-                </button>
-                <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators"
-                    data-bs-slide="next">
-                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                    <span class="visually-hidden">Next</span>
-                </button>
+    <div class="container d-flex justify-content-center" style="margin-top: 150px !important; margin-bottom: 40px !important;">
+        <div id="carouselExampleIndicators" class="carousel slide" style="width: 1000px; height: 350px;">
+            <div class="carousel-indicators" style="z-index: 1;">
+                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0"
+                    class="active" aria-current="true" aria-label="Slide 1"></button>
+                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1"
+                    aria-label="Slide 2"></button>
+                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2"
+                    aria-label="Slide 3"></button>
             </div>
+            <div class="carousel-inner" style="border-radius: 1rem;">
+                <div class="carousel-item active" data-bs-interval="3000">
+                    <img src="assets/banner2.jpg" class="d-block w-100" alt="...">
+                </div>
+                <div class="carousel-item" data-bs-interval="3000">
+                    <img src="assets/banner1.jpg" class="d-block w-100" alt="...">
+                </div>
+                <div class="carousel-item" data-bs-interval="3000">
+                    <img src="assets/banner3.jpeg" class="d-block w-100" alt="...">
+                </div>
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators"
+                data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators"
+                data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
         </div>
-    </header>
+    </div>
+</header>
+
 
     <!-- Game Terbaru-->
     <section class="py-5">
@@ -177,7 +190,7 @@ $rows1 = $stmt1->fetchAll(PDO::FETCH_ASSOC);
                     $id = $row["game_id"];
                     echo "
                     <div class='col mb-5'>
-                    <div class='card border-black text-white mb-3 h-80' style='border-radius: 1rem;background-color: rgb(0, 0, 0, 0.4) !important'>
+                    <div class='card border-black text-white mb-3 h-80' style='border-radius: 1rem;background-color: rgb(0, 0, 0, 0.6) !important'>
                     <img class='card-img-top' style='border-radius: 1rem;' src='" . $row['logo'] . "' alt='...' />
                     <div class='card-body p-4'>
                     <div class='text-center'><h5 class='fw-bolder'>" . $row['game_name'] . "</h5></div>
@@ -201,7 +214,7 @@ $rows1 = $stmt1->fetchAll(PDO::FETCH_ASSOC);
                 foreach ($rows1 as $row1) {
                     $id = $row1["game_id"];
                     echo "<div class='col mb-5'>
-                    <div class='card border-black text-white mb-3 h-80' style='border-radius: 1rem;background-color: rgb(0, 0, 0, 0.4) !important'>
+                    <div class='card border-black text-white mb-3 h-80' style='border-radius: 1rem;background-color: rgb(0, 0, 0, 0.6) !important'>
                     <img class='card-img-top' style='border-radius: 1rem;' src='" . $row1['logo'] . "' alt='...' />
                     <div class='card-body p-4'>
                     <div class='text-center'><h5 class='fw-bolder'>" . $row1['game_name'] . "</h5></div>
@@ -262,7 +275,7 @@ $rows1 = $stmt1->fetchAll(PDO::FETCH_ASSOC);
 </body>
 
 <!-- Footer-->
-<footer class="py-5 bg-dark" style="background-color: rgb(0, 0, 0, 0.4) !important">
+<footer class="py-5 bg-dark" style="background-color: rgb(0, 0, 0, 0.6) !important">
     <div class="container">
         <p class="m-0 text-center text-white">Copyright &copy; PAY2WIN 2023</p>
     </div>
