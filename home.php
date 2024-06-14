@@ -24,7 +24,7 @@ SELECT
 FROM
     ItemSales
 WHERE
-    sales_rank <= 4;
+    sales_rank <= 10;
 ");
 
 $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -47,13 +47,8 @@ if (isset($_SESSION['user'])) {
     $stmt1->bindParam(':pass', $password);
     $stmt1->execute();
 
-    // Fetch user data
     $user = $stmt1->fetch(PDO::FETCH_ASSOC);
-
-    $memberId = $user['member_id'];
-    $userEmail = $user['email'];
-    $userName = $user['username'];
-    $password = $user['password'];
+    // Fetch user data
     $saldo = $user['saldo'];
 } else {
     // Redirect or display an error message if the user is not logged in
@@ -123,7 +118,7 @@ if (isset($_SESSION['user'])) {
 
     <!-- Navigation -->
     <nav class="py-4 navbar navbar-expand-lg navbar-dark fixed-top"
-        style="background: rgba(0, 0, 0, 0.4) !important; backdrop-filter: blur(10px) saturate(125%); z-index: 2; -webkit-backdrop-filter: blur(10px) saturate(125%);">
+        style="background: rgba(0, 0, 0, 0.6) !important; backdrop-filter: blur(10px) saturate(125%); z-index: 2; -webkit-backdrop-filter: blur(10px) saturate(125%);">
         <div class="container px-4 px-lg-5 text-white">
             <a class="navbar-brand" style="height: 52px;" href="home.php">
                 <img src="assets\Web Logo\pay-2-win-full.png" alt="PAY2WIN Logo" class="img-fluid"
@@ -143,7 +138,7 @@ if (isset($_SESSION['user'])) {
                     <li class="nav-item me-lg-4 d-lg-block"><button type="button"
                             class="balance-info-btn btn btn-outline-light" data-id="<?php echo $memberId; ?>"
                             data-saldo="<?php echo $saldo; ?>" data-bs-toggle="modal"
-                            data-bs-target="#balanceInfo">BALANCE & TOP UP</button></li>
+                            data-bs-target="#balanceInfo">Balance: Rp. <?php echo number_format($saldo, 2, ',', '.') ?></button></li>
                 </ul>
 
                 <ul class="navbar-nav align-items-center">
@@ -161,44 +156,67 @@ if (isset($_SESSION['user'])) {
     </nav>
 
     <!-- Header-->
-    <header class="py-5">
-        <div class="container px-4 px-lg-5" style="margin-top: 150px !important; margin-bottom: 40px !important;">
-            <div id="carouselExampleIndicators" class="carousel slide">
-                <div class="carousel-indicators" style="z-index: 1;">
-                    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0"
-                        class="active" aria-current="true" aria-label="Slide 1"></button>
-                    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1"
-                        aria-label="Slide 2"></button>
-                    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2"
-                        aria-label="Slide 3"></button>
+    <header class="">
+    <div class="container d-flex justify-content-center" style="margin-top: 150px !important; margin-bottom: 30px !important;">
+        <div id="carouselExampleIndicators" class="carousel slide" style="width: 1000px; height: 350px;">
+            <div class="carousel-indicators" style="z-index: 1;">
+                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0"
+                    class="active" aria-current="true" aria-label="Slide 1"></button>
+                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1"
+                    aria-label="Slide 2"></button>
+                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2"
+                    aria-label="Slide 3"></button>
+            </div>
+            <div class="carousel-inner" style="border-radius: 1rem;">
+                <div class="carousel-item active" data-bs-interval="3000">
+                    <img src="assets/banner2.jpg" class="d-block w-100" alt="...">
                 </div>
-                <div class="carousel-inner" style="border-radius: 1rem;">
-                    <div class="carousel-item active" data-bs-interval="3000">
-                        <img src="assets/coc_home.jpg" class="d-block w-100" alt="...">
-                    </div>
-                    <div class="carousel-item" data-bs-interval="3000">
-                        <img src="assets/hsr_banner.jpg" class="d-block w-100" alt="...">
-                    </div>
-                    <div class="carousel-item" data-bs-interval="3000">
-                        <img src="assets/banner3.jpeg" class="d-block w-100" alt="...">
-                    </div>
+                <div class="carousel-item" data-bs-interval="3000">
+                    <img src="assets/banner1.jpg" class="d-block w-100" alt="...">
                 </div>
-                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators"
-                    data-bs-slide="prev">
-                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                    <span class="visually-hidden">Previous</span>
-                </button>
-                <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators"
-                    data-bs-slide="next">
-                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                    <span class="visually-hidden">Next</span>
-                </button>
+                <div class="carousel-item" data-bs-interval="3000">
+                    <img src="assets/banner3.jpeg" class="d-block w-100" alt="...">
+                </div>
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators"
+                data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators"
+                data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
+        </div>
+    </div>
+</header>
+
+    <!-- Paling Laris -->
+    <section class="py-5">
+        <h1 class="text-center text-white">Paling Laris</h1>
+        <div class="container px-4 px-lg-5 mt-5">
+            <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+                <?php
+                foreach ($rows1 as $row1) {
+                    $id = $row1["game_id"];
+                    echo "<div class='col mb-5'>
+                    <div class='card border-black text-white mb-3 h-80' style='border-radius: 1rem;background-color: rgb(0, 0, 0, 0.6) !important'>
+                    <img class='card-img-top' style='border-radius: 1rem;' src='" . $row1['logo'] . "' alt='...' />
+                    <div class='card-body p-4'>
+                    <div class='text-center'><h5 class='fw-bolder'>" . $row1['game_name'] . "</h5></div>
+                    </div>
+                    <div class='card-footer p-4 pt-0 border-top-0 bg-transparent'>
+                    <div class='text-center'><a href='details.php?id=$id'><button class='btn btn-outline-light  stretched-link' type='submit'>Learn More</button></a></div>
+                    </div></div></div>";
+                }
+                ?>
             </div>
         </div>
-    </header>
+    </section>
 
     <!-- Game Terbaru-->
-    <section class="py-5">
+    <section class="">
         <h1 class="text-center text-white">Produk Terbaru</h1>
         <div class="container px-4 px-lg-5 mt-5">
             <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
@@ -209,7 +227,7 @@ if (isset($_SESSION['user'])) {
                     //echo($id);
                     echo "
                     <div class='col mb-5'>
-                    <div class='card border-black text-white mb-3 h-80' style='border-radius: 1rem;background-color: rgb(0, 0, 0, 0.4) !important'>
+                    <div class='card border-black text-white mb-3 h-80' style='border-radius: 1rem;background-color: rgb(0, 0, 0, 0.6) !important'>
                     <img class='card-img-top' style='border-radius: 1rem;' src='" . $row['logo'] . "' alt='...' />
                     <div class='card-body p-4'>
                     <div class='text-center'><h5 class='fw-bolder'>" . $row['game_name'] . "</h5></div>
@@ -223,29 +241,6 @@ if (isset($_SESSION['user'])) {
         </div>
     </section>
 
-
-    <!-- Paling Laris -->
-    <section class="py-5">
-        <h1 class="text-center text-white">Paling Laris</h1>
-        <div class="container px-4 px-lg-5 mt-5">
-            <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
-                <?php
-                foreach ($rows1 as $row1) {
-                    $id = $row1["game_id"];
-                    echo "<div class='col mb-5'>
-                    <div class='card border-black text-white mb-3 h-80' style='border-radius: 1rem;background-color: rgb(0, 0, 0, 0.4) !important'>
-                    <img class='card-img-top' style='border-radius: 1rem;' src='" . $row1['logo'] . "' alt='...' />
-                    <div class='card-body p-4'>
-                    <div class='text-center'><h5 class='fw-bolder'>" . $row1['game_name'] . "</h5></div>
-                    </div>
-                    <div class='card-footer p-4 pt-0 border-top-0 bg-transparent'>
-                    <div class='text-center'><a href='details.php?id=$id'><button class='btn btn-outline-light  stretched-link' type='submit'>Learn More</button></a></div>
-                    </div></div></div>";
-                }
-                ?>
-            </div>
-        </div>
-    </section>
 
     <!-- Logout Modal -->
     <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
@@ -468,7 +463,7 @@ if (isset($_SESSION['user'])) {
 </body>
 
 <!-- Footer-->
-<footer class="py-5" style="background-color: rgb(0, 0, 0, 0.4) !important">
+<footer class="py-5" style="background-color: rgb(0, 0, 0, 0.6) !important">
     <div class="container">
         <p class="m-0 text-center text-white">Copyright &copy; PAY2WIN 2023</p>
     </div>
